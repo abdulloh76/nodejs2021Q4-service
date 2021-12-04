@@ -4,16 +4,16 @@ const User = require('./user.model');
 
 const getAll = () => Promise.resolve(usersRepo.getAll());
 
-const getById = async (id) => Promise.resolve(usersRepo.getById(id));
+const getById = (id) => Promise.resolve(usersRepo.getById(id));
 
-const create = async (userData) => {
+const create = (userData) => {
   const user = new User({ ...userData });
   return Promise.resolve(usersRepo.create(user));
 };
 
-const update = async (id, data) => Promise.resolve(usersRepo.update(id, data));
+const update = (id, data) => Promise.resolve(usersRepo.update(id, data));
 
-const remove = async (id) => {
+const remove = (id) => {
   tasksRepo.unassignUser(id);
   return Promise.resolve(usersRepo.remove(id));
 };

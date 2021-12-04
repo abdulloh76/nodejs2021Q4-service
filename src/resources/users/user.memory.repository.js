@@ -1,20 +1,20 @@
 let users = [];
 
-const getAll = async () => users;
+const getAll = () => users;
 
-const getById = async (id) => users.find((el) => el.id === id);
+const getById = (id) => users.find((el) => el.id === id);
 
-const create = async (user) => {
+const create = (user) => {
   users.push(user);
   return user;
 };
 
-const update = async (id, data) => {
+const update = (id, data) => {
   const userIndex = users.findIndex((el) => el.id === id);
   return Object.assign(users[userIndex], data);
 };
 
-const remove = async (id) => {
+const remove = (id) => {
   users = users.filter((el) => el.id !== id);
 };
 

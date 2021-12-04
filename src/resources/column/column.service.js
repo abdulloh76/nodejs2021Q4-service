@@ -3,16 +3,15 @@ const Column = require('./column.model');
 
 const getAll = () => Promise.resolve(columnsRepo.getAll());
 
-const getById = async (id) => Promise.resolve(columnsRepo.getById(id));
+const getById = (id) => Promise.resolve(columnsRepo.getById(id));
 
-const create = async (userData) => {
+const create = (userData) => {
   const user = new Column({ ...userData });
   return Promise.resolve(columnsRepo.create(user));
 };
 
-const update = async (id, data) =>
-  Promise.resolve(columnsRepo.update(id, data));
+const update = (id, data) => Promise.resolve(columnsRepo.update(id, data));
 
-const remove = async (id) => Promise.resolve(columnsRepo.remove(id));
+const remove = (id) => Promise.resolve(columnsRepo.remove(id));
 
 module.exports = { getAll, getById, create, update, remove };

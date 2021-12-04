@@ -2,21 +2,21 @@ const tasksRepo = require('../task/task.memory.repository');
 
 let boards = [];
 
-const getAll = async () => boards;
+const getAll = () => boards;
 
-const getById = async (id) => boards.find((el) => el.id === id);
+const getById = (id) => boards.find((el) => el.id === id);
 
-const create = async (board) => {
+const create = (board) => {
   boards.push(board);
   return board;
 };
 
-const update = async (id, data) => {
+const update = (id, data) => {
   const boardIndex = boards.findIndex((el) => el.id === id);
   return Object.assign(boards[boardIndex], data);
 };
 
-const remove = async (id) => {
+const remove = (id) => {
   boards = boards.filter((el) => el.id !== id);
   tasksRepo.removeBoard(id);
 };

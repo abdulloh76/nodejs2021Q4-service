@@ -3,15 +3,15 @@ const User = require('./board.model');
 
 const getAll = () => Promise.resolve(boardsRepo.getAll());
 
-const getById = async (id) => Promise.resolve(boardsRepo.getById(id));
+const getById = (id) => Promise.resolve(boardsRepo.getById(id));
 
-const create = async (boardData) => {
+const create = (boardData) => {
   const board = new User({ ...boardData });
   return Promise.resolve(boardsRepo.create(board));
 };
 
-const update = async (id, data) => Promise.resolve(boardsRepo.update(id, data));
+const update = (id, data) => Promise.resolve(boardsRepo.update(id, data));
 
-const remove = async (id) => Promise.resolve(boardsRepo.remove(id));
+const remove = (id) => Promise.resolve(boardsRepo.remove(id));
 
 module.exports = { getAll, getById, create, update, remove };
