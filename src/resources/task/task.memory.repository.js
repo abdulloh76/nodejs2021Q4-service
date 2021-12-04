@@ -26,6 +26,15 @@ const removeBoard = async (boardId) => {
   tasks[boardId] = undefined;
 };
 
+const unassignUser = async (userId) => {
+  Object.keys(tasks).forEach((boardId) => {
+    tasks[boardId].forEach((task) => {
+      // eslint-disable-next-line no-param-reassign
+      if (task.userId === userId) task.userId = null;
+    });
+  });
+};
+
 module.exports = {
   getAllByBoardId,
   getByTaskId,
@@ -33,4 +42,5 @@ module.exports = {
   update,
   remove,
   removeBoard,
+  unassignUser,
 };
