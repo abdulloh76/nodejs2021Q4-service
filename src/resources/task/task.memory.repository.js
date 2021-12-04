@@ -2,8 +2,10 @@ const tasks = {};
 
 const getAllByBoardId = async (boardId) => tasks[boardId];
 
-const getByTaskId = async (boardId, taskId) =>
-  tasks[boardId].find((task) => task.id === taskId);
+const getByTaskId = async (boardId, taskId) => {
+  if (tasks[boardId]) return tasks[boardId].find((task) => task.id === taskId);
+  return false;
+};
 
 const create = async (boardId, task) => {
   if (!tasks[boardId]) tasks[boardId] = [];
@@ -20,4 +22,15 @@ const remove = async (boardId, taskId) => {
   tasks[boardId] = tasks[boardId].filter((task) => task.id !== taskId);
 };
 
-module.exports = { getAllByBoardId, getByTaskId, create, update, remove };
+const removeBoard = async (boardId) => {
+  tasks[boardId] = undefined;
+};
+
+module.exports = {
+  getAllByBoardId,
+  getByTaskId,
+  create,
+  update,
+  remove,
+  removeBoard,
+};
