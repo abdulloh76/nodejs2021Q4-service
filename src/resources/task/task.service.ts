@@ -1,21 +1,19 @@
-const tasksRepo = require('./task.memory.repository');
-const User = require('./task.model');
+import * as tasksRepo from './task.memory.repository';
+import Task from './task.model';
 
-const getAllByBoardId = (boardId) =>
+export const getAllByBoardId = (boardId: string) =>
   Promise.resolve(tasksRepo.getAllByBoardId(boardId));
 
-const getByTaskId = (boardId, taskId) =>
+export const getByTaskId = (boardId: string, taskId: string) =>
   Promise.resolve(tasksRepo.getByTaskId(boardId, taskId));
 
-const create = (boardId, taskData) => {
-  const task = new User({ ...taskData, boardId });
+export const create = (boardId: string, taskData: Task) => {
+  const task = new Task({ ...taskData, boardId });
   return Promise.resolve(tasksRepo.create(boardId, task));
 };
 
-const update = (boardId, taskId, data) =>
+export const update = (boardId: string, taskId: string, data: Task) =>
   Promise.resolve(tasksRepo.update(boardId, taskId, data));
 
-const remove = (boardId, taskId) =>
+export const remove = (boardId: string, taskId: string) =>
   Promise.resolve(tasksRepo.remove(boardId, taskId));
-
-module.exports = { getAllByBoardId, getByTaskId, create, update, remove };

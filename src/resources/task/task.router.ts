@@ -1,5 +1,7 @@
-const router = require('express').Router();
-const tasksService = require('./task.service');
+import express from 'express';
+import * as tasksService from './task.service';
+
+const router = express.Router();
 
 router.route('/boards/:boardId/tasks').get((req, res) => {
   tasksService
@@ -39,4 +41,4 @@ router.route('/boards/:boardId/tasks/:taskId').delete((req, res) => {
     .catch((e) => res.status(400).json({ message: e.message }));
 });
 
-module.exports = router;
+export default router;

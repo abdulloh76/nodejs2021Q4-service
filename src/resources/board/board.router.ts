@@ -1,5 +1,7 @@
-const router = require('express').Router();
-const boardsService = require('./board.service');
+import express from 'express';
+import * as boardsService from './board.service';
+
+const router = express.Router();
 
 router.route('/boards').get((req, res) => {
   boardsService
@@ -34,9 +36,9 @@ router.route('/boards/:id').put((req, res) => {
 
 router.route('/boards/:id').delete((req, res) => {
   boardsService
-    .remove(req.params.id, req.body)
+    .remove(req.params.id)
     .then(() => res.status(204).json({ message: 'board successfully deleted' }))
     .catch((e) => res.status(400).json({ message: e.message }));
 });
 
-module.exports = router;
+export default router;

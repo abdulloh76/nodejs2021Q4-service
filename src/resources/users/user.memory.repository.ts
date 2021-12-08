@@ -1,21 +1,21 @@
-let users = [];
+import User from './user.model';
 
-const getAll = () => users;
+let users: User[] = [];
 
-const getById = (id) => users.find((el) => el.id === id);
+export const getAll = () => users;
 
-const create = (user) => {
+export const getById = (id: string) => users.find((el) => el.id === id);
+
+export const create = (user: User) => {
   users.push(user);
   return user;
 };
 
-const update = (id, data) => {
+export const update = (id: string, data: User) => {
   const userIndex = users.findIndex((el) => el.id === id);
   return Object.assign(users[userIndex], data);
 };
 
-const remove = (id) => {
+export const remove = (id: string) => {
   users = users.filter((el) => el.id !== id);
 };
-
-module.exports = { getAll, getById, create, update, remove };

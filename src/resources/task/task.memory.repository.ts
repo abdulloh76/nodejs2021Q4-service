@@ -1,46 +1,38 @@
-const tasks = {};
+import Task from './task.model';
 
-const getAllByBoardId = (boardId) => tasks[boardId];
+const tasks: { [boardId: string]: Task[] } = {};
 
-const getByTaskId = (boardId, taskId) => {
+export const getAllByBoardId = (boardId: string) => tasks[boardId];
+
+export const getByTaskId = (boardId: string, taskId: string) => {
   if (tasks[boardId]) return tasks[boardId].find((task) => task.id === taskId);
   return false;
 };
 
-const create = (boardId, task) => {
+export const create = (boardId: string, task: Task) => {
   if (!tasks[boardId]) tasks[boardId] = [];
   tasks[boardId].push({ ...task, boardId });
   return task;
 };
 
-const update = (boardId, taskId, data) => {
+export const update = (boardId: string, taskId: string, data: Task) => {
   const taskIndex = tasks[boardId].findIndex((task) => task.id === taskId);
   return Object.assign(tasks[boardId][taskIndex], data);
 };
 
-const remove = (boardId, taskId) => {
+export const remove = (boardId: string, taskId: string) => {
   tasks[boardId] = tasks[boardId].filter((task) => task.id !== taskId);
 };
 
-const removeBoard = (boardId) => {
-  tasks[boardId] = undefined;
+export const removeBoard = (boardId: string) => {
+  delete tasks[boardId];
 };
 
-const unassignUser = (userId) => {
+export const unassignUser = (userId: string) => {
   Object.keys(tasks).forEach((boardId) => {
     tasks[boardId].forEach((task) => {
       // eslint-disable-next-line no-param-reassign
       if (task.userId === userId) task.userId = null;
     });
   });
-};
-
-module.exports = {
-  getAllByBoardId,
-  getByTaskId,
-  create,
-  update,
-  remove,
-  removeBoard,
-  unassignUser,
 };

@@ -1,17 +1,16 @@
-const boardsRepo = require('./board.memory.repository');
-const User = require('./board.model');
+import * as boardsRepo from './board.memory.repository';
+import Board from './board.model';
 
-const getAll = () => Promise.resolve(boardsRepo.getAll());
+export const getAll = () => Promise.resolve(boardsRepo.getAll());
 
-const getById = (id) => Promise.resolve(boardsRepo.getById(id));
+export const getById = (id: string) => Promise.resolve(boardsRepo.getById(id));
 
-const create = (boardData) => {
-  const board = new User({ ...boardData });
+export const create = (boardData: Board) => {
+  const board = new Board({ ...boardData });
   return Promise.resolve(boardsRepo.create(board));
 };
 
-const update = (id, data) => Promise.resolve(boardsRepo.update(id, data));
+export const update = (id: string, data: Board) =>
+  Promise.resolve(boardsRepo.update(id, data));
 
-const remove = (id) => Promise.resolve(boardsRepo.remove(id));
-
-module.exports = { getAll, getById, create, update, remove };
+export const remove = (id: string) => Promise.resolve(boardsRepo.remove(id));
