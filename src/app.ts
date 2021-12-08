@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import express from 'express';
+import express, { Request } from 'express';
+
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';

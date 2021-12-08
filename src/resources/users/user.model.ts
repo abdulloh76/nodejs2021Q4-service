@@ -2,9 +2,13 @@ import { v4 } from 'uuid';
 
 export default class User {
   id: string;
+
   name: string;
+
   login: string;
+
   password: string;
+
   constructor({ id = v4(), name, login, password }: User) {
     this.id = id;
     this.name = name;
