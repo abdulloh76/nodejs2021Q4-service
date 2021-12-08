@@ -16,7 +16,12 @@
   },
   "plugins": ["@typescript-eslint"],
   "settings": {
-    "noInlineConfig": true
+    "noInlineConfig": true,
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".js"]
+      }
+    }
   },
   "extends": [
     "eslint:recommended",
@@ -25,11 +30,18 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "on",
+    "@typescript-eslint/no-explicit-any": "error",
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "node/no-missing-import": [
+      "error",
+      {
+        "resolvePaths": ["./src/"],
+        "tryExtensions": [".js", ".ts", ".json", ".node"]
+      }
+    ]
   }
 }
