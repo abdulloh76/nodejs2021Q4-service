@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import { createWriteStream } from 'fs';
 import cors from 'cors';
@@ -30,7 +30,6 @@ app.use(taskRouter);
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use('/', (req: Request, res, next) => {
-  console.log(req.params.query);
   if (req.originalUrl === '/') {
     res.send('Service is running!');
     return;
@@ -39,16 +38,27 @@ app.use('/', (req: Request, res, next) => {
   next();
 });
 
+const errorsLogStream = createWriteStream('erros.log');
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json({ message: err.message });
+  next();
+});
+
 process.on('uncaughtException', (error) => {
   console.error(`captured error: ${error.message}`);
+  errorsLogStream.write(error.message);
   // fs.writeFileSync...
   // process.exit(1);
 });
+// throw new Error('ooohhhhooo');
 
 process.on('unhandledRejection', (error: Error) => {
   console.error(`captured error: ${error.message}`);
+  errorsLogStream.write(error.message);
   // fs.writeFileSync...
   // process.exit(1);
 });
+// Promise.reject(Error('promise reject'));
 
 export default app;
