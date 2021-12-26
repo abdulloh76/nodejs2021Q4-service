@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import { createWriteStream } from 'fs';
@@ -20,8 +21,22 @@ morgan.token('params', (req: Request) => JSON.stringify(req.params));
 const loggerFormat =
   '[:date[web]] ":method :url status::status" params::params query::query  body::body - :response-time ms';
 
+const accessLogStream = createWriteStream('access.log');
+const errorsLogStream = createWriteStream('errors.log');
+
 app.use(cors());
-app.use(morgan(loggerFormat, { stream: createWriteStream('access.log') }));
+app.use(
+  morgan(loggerFormat, {
+    stream: accessLogStream,
+    skip: (req, res) => res.statusCode >= 400,
+  })
+);
+app.use(
+  morgan(loggerFormat, {
+    stream: errorsLogStream,
+    skip: (req, res) => res.statusCode < 400,
+  })
+);
 app.use(express.json());
 app.use(userRouter);
 app.use(boardRouter);
@@ -38,8 +53,6 @@ app.use('/', (req: Request, res, next) => {
   next();
 });
 
-const errorsLogStream = createWriteStream('erros.log');
-
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
   next();
@@ -47,18 +60,14 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 process.on('uncaughtException', (error) => {
   console.error(`captured error: ${error.message}`);
-  errorsLogStream.write(error.message);
-  // fs.writeFileSync...
-  // process.exit(1);
+  errorsLogStream.write(`captured error: ${error.message}\n`);
 });
-// throw new Error('ooohhhhooo');
+// throw new Error('throwing uncaught exception');
 
 process.on('unhandledRejection', (error: Error) => {
   console.error(`captured error: ${error.message}`);
-  errorsLogStream.write(error.message);
-  // fs.writeFileSync...
-  // process.exit(1);
+  errorsLogStream.write(`captured error: ${error.message}\n`);
 });
-// Promise.reject(Error('promise reject'));
+// Promise.reject(Error('throwing promise rejection'));
 
 export default app;
