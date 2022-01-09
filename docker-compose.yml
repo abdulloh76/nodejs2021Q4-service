@@ -8,15 +8,17 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./src:/app/src
+    depends_on:
+      - db
   db:
-    image: postgres
+    build: ./db
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - postgresdb:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 volumes:
   logs: null
   postgresdb: null
