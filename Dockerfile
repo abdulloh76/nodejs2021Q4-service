@@ -9,6 +9,7 @@ RUN npm install
 
 COPY ./src ./src
 COPY ./doc ./doc
+COPY ./logs ./logs
 
 COPY  ./.env ./.env
 
