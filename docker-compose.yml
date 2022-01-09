@@ -6,7 +6,8 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      - ./logs/:/app/logs
+      - ./logs:/app/logs
+      - ./src:/app/src
   db:
     image: postgres
     ports:
