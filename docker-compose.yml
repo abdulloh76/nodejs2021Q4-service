@@ -10,6 +10,7 @@ services:
       - ./src:/app/src
     depends_on:
       - db
+    restart: on-failure
   db:
     build: ./db
     ports:
@@ -19,6 +20,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: on-failure
 volumes:
   logs: null
   postgresdb: null
