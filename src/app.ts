@@ -21,8 +21,12 @@ morgan.token('params', (req: Request) => JSON.stringify(req.params));
 const loggerFormat =
   '[:date[web]] ":method :url status::status" params::params query::query  body::body - :response-time ms';
 
-const accessLogStream = createWriteStream('./logs/access.log');
-const errorsLogStream = createWriteStream('./logs/errors.log');
+const accessLogStream = createWriteStream('./logs/access.log', {
+  flags: 'a',
+});
+const errorsLogStream = createWriteStream('./logs/errors.log', {
+  flags: 'a',
+});
 
 app.use(cors());
 app.use(
