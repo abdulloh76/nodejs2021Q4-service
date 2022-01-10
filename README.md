@@ -32,6 +32,7 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 ### Prerequisites
 
 - Docker - [Download & Install Docker](https://docs.docker.com/engine/install/).
+- create empty folder `logs` in the root of project 
 
 ### Launching the application container
 
