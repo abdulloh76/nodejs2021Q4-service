@@ -8,8 +8,6 @@ RUN npm install --production
 
 COPY ./src ./src
 COPY ./doc ./doc
-COPY ./logs ./logs
-
-COPY  ./.env ./.env
+RUN mkdir -p ./logs/
 
 CMD ["npm", "run", "start"]

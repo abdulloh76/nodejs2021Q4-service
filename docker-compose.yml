@@ -11,6 +11,13 @@ services:
     depends_on:
       - db
     restart: on-failure
+    environment:
+      PORT: ${PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: db
   db:
     build: ./db
     ports:
@@ -18,8 +25,10 @@ services:
     volumes:
       - postgresdb:/var/lib/postgresql/data
     environment:
+      # POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # POSTGRES_DB: ${POSTGRES_DB}
     restart: on-failure
 volumes:
   logs: null
