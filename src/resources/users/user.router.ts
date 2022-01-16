@@ -1,6 +1,6 @@
 import express from 'express';
-import User from './user.model';
 import * as usersService from './user.service';
+import { User } from '../../entities/User.entity';
 
 const router = express.Router();
 
@@ -24,14 +24,20 @@ router.route('/users/:id').get((req, res) => {
 router.route('/users').post((req, res) => {
   usersService
     .create(req.body)
-    .then((user) => res.status(201).json(User.toResponse(user)))
+    .then((user) => {
+      if (user) res.status(201).json(User.toResponse(user));
+      res.status(404).json({ message: 'user not found' });
+    })
     .catch((e) => res.status(400).json({ message: e.message }));
 });
 
 router.route('/users/:id').put((req, res) => {
   usersService
     .update(req.params.id, req.body)
-    .then((user) => res.json(User.toResponse(user)))
+    .then((user) => {
+      if (user) res.json(user);
+      res.status(404).json({ message: 'user not found' });
+    })
     .catch((e) => res.status(400).json({ message: e.message }));
 });
 

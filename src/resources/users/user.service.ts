@@ -1,6 +1,6 @@
 import * as tasksRepo from '../task/task.memory.repository';
-import * as usersRepo from './user.memory.repository';
-import User from './user.model';
+import * as usersRepo from './user.postgres.repository';
+import { User } from '../../entities/User.entity';
 
 /**
  * @returns Returns Resolved Promise of  all users
@@ -18,10 +18,8 @@ export const getById = (id: string) => Promise.resolve(usersRepo.getById(id));
  * @param userData - user obj
  * @returns Returns Resolved Promise of the newly created user
  */
-export const create = (userData: User) => {
-  const user = new User({ ...userData });
-  return Promise.resolve(usersRepo.create(user));
-};
+export const create = (userData: User) =>
+  Promise.resolve(usersRepo.create(userData));
 
 /**
  * @param id - uuid of user
