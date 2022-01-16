@@ -9,7 +9,7 @@ createConnection({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [],
+  entities: ['**/*.entity{.ts,.js}'],
   synchronize: true,
   logging: false,
 })
