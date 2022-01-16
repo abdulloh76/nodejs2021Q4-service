@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 
 @Entity()
 export class Task {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ColumnEntity()
@@ -19,24 +19,24 @@ export class Task {
   @ColumnEntity()
   description: string;
 
-  @ColumnEntity()
+  @ColumnEntity('varchar', { nullable: true })
   userId: string | null;
 
-  @ColumnEntity()
-  boardId: string;
+  @ColumnEntity('varchar', { nullable: true })
+  boardId: string | null;
 
-  @ColumnEntity()
-  columnId: string;
+  @ColumnEntity('varchar', { nullable: true })
+  columnId: string | null;
 
   constructor({
     id = v4(),
     title = 'TITLE',
-    order,
-    description,
-    userId,
-    boardId,
-    columnId,
-  }: Task) {
+    order = 0,
+    description = 'description',
+    userId = null,
+    boardId = null,
+    columnId = null,
+  }: Partial<Task> = {}) {
     this.id = id;
     this.title = title;
     this.order = order;

@@ -13,16 +13,20 @@ interface Column {
 
 @Entity()
 export class Board {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ColumnEntity()
   title: string;
 
-  @ColumnEntity()
+  @ColumnEntity('jsonb', { array: true, nullable: true })
   columns: Column[];
 
-  constructor({ id = v4(), title = 'TITLE', columns }: Board) {
+  constructor({
+    id = v4(),
+    title = 'TITLE',
+    columns = [],
+  }: Partial<Board> = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns;

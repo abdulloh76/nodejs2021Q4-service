@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ColumnEntity()
@@ -19,10 +19,20 @@ export class User {
   @ColumnEntity()
   password: string;
 
-  constructor({ id = v4(), name, login, password }: User) {
+  constructor({
+    id = v4(),
+    name = '',
+    login = '',
+    password = '',
+  }: Partial<User> = {}) {
     this.id = id;
     this.name = name;
     this.login = login;
     this.password = password;
+  }
+
+  static toResponse(user: User) {
+    const { id, name, login } = user;
+    return { id, name, login };
   }
 }
