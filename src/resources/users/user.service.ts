@@ -1,4 +1,4 @@
-import * as tasksRepo from '../task/task.memory.repository';
+import * as tasksRepo from '../task/task.postgres.repository';
 import * as usersRepo from './user.postgres.repository';
 import { User } from '../../entities/User.entity';
 

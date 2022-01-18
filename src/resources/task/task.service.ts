@@ -1,12 +1,12 @@
-import * as tasksRepo from './task.memory.repository';
-import Task from './task.model';
+import { Task } from '../../entities/Task.entity';
+import * as tasksRepo from './task.postgres.repository';
 
 /**
  * @param boardId - board id tasks
  * @returns Returns Resolved Promise of  all tasks by board id
  */
 export const getAllByBoardId = (boardId: string) =>
-  Promise.resolve(tasksRepo.getAllByBoardId(boardId));
+  tasksRepo.getAllByBoardId(boardId);
 
 /**
  * @param boardId - uuid of board
@@ -14,7 +14,7 @@ export const getAllByBoardId = (boardId: string) =>
  * @returns Returns Resolved Promise of the task by id from board by id
  */
 export const getByTaskId = (boardId: string, taskId: string) =>
-  Promise.resolve(tasksRepo.getByTaskId(boardId, taskId));
+  tasksRepo.getByTaskId(taskId);
 
 /**
  * Creates new task and passes it to task creating function
@@ -22,10 +22,8 @@ export const getByTaskId = (boardId: string, taskId: string) =>
  * @param taskId - uuid of task
  * @returns Returns Resolved Promise of the newly created task
  */
-export const create = (boardId: string, taskData: Task) => {
-  const task = new Task({ ...taskData, boardId });
-  return Promise.resolve(tasksRepo.create(boardId, task));
-};
+export const create = (boardId: string, taskData: Task) =>
+  tasksRepo.create(taskData);
 
 /**
  * @param boardId - uuid of board
@@ -34,7 +32,7 @@ export const create = (boardId: string, taskData: Task) => {
  */
 
 export const update = (boardId: string, taskId: string, data: Task) =>
-  Promise.resolve(tasksRepo.update(boardId, taskId, data));
+  tasksRepo.update(taskId, data);
 
 /**
  * @param boardId - uuid of board
@@ -42,4 +40,4 @@ export const update = (boardId: string, taskId: string, data: Task) =>
  * @returns Returns Resolved Promise that returns void
  */
 export const remove = (boardId: string, taskId: string) =>
-  Promise.resolve(tasksRepo.remove(boardId, taskId));
+  tasksRepo.remove(taskId);

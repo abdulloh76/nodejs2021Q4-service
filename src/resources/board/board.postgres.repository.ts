@@ -1,8 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Board } from '../../entities/Board.entity';
-import * as tasksRepo from '../task/task.memory.repository';
-
-// let boards: Board[] = [];
+import * as tasksRepo from '../task/task.postgres.repository';
 
 /**
  * @returns Returns all board objects
