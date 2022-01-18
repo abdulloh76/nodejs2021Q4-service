@@ -4,12 +4,7 @@ import {
   Column as ColumnEntity,
 } from 'typeorm';
 import { v4 } from 'uuid';
-
-interface Column {
-  id: string;
-  title: string;
-  order: number;
-}
+import { Column } from './Column.entity';
 
 @Entity()
 export class Board {
@@ -19,7 +14,7 @@ export class Board {
   @ColumnEntity()
   title: string;
 
-  @ColumnEntity('jsonb', { array: true, nullable: true })
+  @ColumnEntity('jsonb', { nullable: true })
   columns: Column[];
 
   constructor({
@@ -30,5 +25,12 @@ export class Board {
     this.id = id;
     this.title = title;
     this.columns = columns;
+  }
+
+  static createColumns(columns: Column[] | null) {
+    if (Array.isArray(columns)) {
+      return columns.map((col: Column) => new Column({ ...col }));
+    }
+    return [new Column()];
   }
 }
